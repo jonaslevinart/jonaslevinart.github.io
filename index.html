@@ -4,42 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Art Portfolio</title>
+    <title>Zorn Palette Art Gallery</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>My Art Portfolio</h1>
-        <p>Featuring CC‑licensed artwork</p>
+        <h1>Zorn Palette Art Gallery</h1>
+        <p>Art showcased using the Zorn limited palette</p>
     </header>
 
     <main>
+        <section class="palette-section">
+            <h2>Inverted Zorn Palette</h2>
+            <div class="palette">
+                <div class="color" style="background:#265f99" title="Inverted Yellow Ochre"></div>
+                <div class="color" style="background:#5dc4c4" title="Inverted Vermilion"></div>
+                <div class="color" style="background:#e1e1e1" title="Inverted Ivory Black"></div>
+                <div class="color" style="background:#000819" title="Inverted Titanium White"></div>
+            </div>
+        </section>
+
+<section class="palette-section">
+    <h2>Inverted Zorn Palette (Added)</h2>
+    <div class="palette">
+        <div class="color" style="background:#265f99" title="Inverted Yellow Ochre"></div>
+        <div class="color" style="background:#5dc4c4" title="Inverted Vermilion"></div>
+        <div class="color" style="background:#e1e1e1" title="Inverted Ivory Black"></div>
+        <div class="color" style="background:#000819" title="Inverted Titanium White"></div>
+    </div>
+</section>
+
         <section class="gallery" id="gallery"></section>
     </main>
 
     <footer>
-        <p>All displayed works use Creative Commons–licensed material.</p>
+        <p>All displayed works are user-added or CC-licensed.</p>
     </footer>
 
     <script src="script.js"></script>
 </body>
 </html>
 
-<!-- styles.css -->
-/* Basic page layout */
+
+/* styles.css */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    color: #333;
+    background: #f2efe9;
+    color: #2c2c2c;
 }
 
 header {
     text-align: center;
-    padding: 30px;
-    background: #222;
+    padding: 40px;
+    background: #1e1e1e;
     color: white;
+}
+
+.palette-section {
+    padding: 20px;
+    text-align: center;
+}
+
+.palette {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.color {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    border: 2px solid #333;
 }
 
 .gallery {
@@ -52,30 +91,62 @@ header {
 .gallery img {
     width: 100%;
     border-radius: 8px;
-    background: #ddd;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
-footer {
-    text-align: center;
+.gallery img:hover {
+    transform: scale(1.03);
+}
+
+/* Lightbox popup */
+#lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
     padding: 20px;
-    font-size: 0.9rem;
-    background: #eee;
 }
 
-<!-- script.js -->
-// Example Creative Commons images (replace with your own CC-licensed images)
-const ccImages = [
-    "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/1/12/Broadway_tower_edit.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/6/60/Naxos_Town_and_Castle.jpg"
+#lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+
+// script.js
+// Replace with your own images by uploading them to the repo and adding their filenames
+const galleryImages = [
+    "myart1.jpg",
+    "myart2.jpg",
+    "myart3.jpg"
 ];
 
 const gallery = document.getElementById("gallery");
 
-ccImages.forEach(url => {
+// Create gallery items
+galleryImages.forEach(url => {
     const img = document.createElement("img");
     img.src = url;
-    img.alt = "CC licensed artwork";
+    img.alt = "Artwork";
+    img.addEventListener("click", () => openLightbox(url));
     gallery.appendChild(img);
+});
+
+// Lightbox popup
+const lightbox = document.createElement("div");
+lightbox.id = "lightbox";
+document.body.appendChild(lightbox);
+
+function openLightbox(url) {
+    lightbox.innerHTML = `<img src="${url}">`;
+    lightbox.style.display = "flex";
+}
+
+lightbox.addEventListener("click", () => {
+    lightbox.style.display = "none";
 });
